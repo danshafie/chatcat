@@ -3,7 +3,7 @@
 const router = require('express').Router();
 
 
-//recursively function to iterate through the routes object and mount the routes
+//recursive function to iterate through the routes object and mount the routes
 let _registerRoutes = (routes, method) => {
   for(let key in routes) {
     if(typeof routes[key] === 'object' && routes[key] !== null && !(routes[key] instanceof Array)) {
