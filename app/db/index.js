@@ -1,7 +1,7 @@
 'use strict';
 
 //require config so we can see which environment were running in
-const config = require('./config');
+const config = require('../config');
 //connect to mongo db depending on which environment youre running
 const Mongoose = require('mongoose').connect(config.dbURI);
 

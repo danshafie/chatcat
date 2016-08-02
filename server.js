@@ -15,6 +15,10 @@ app.use(express.static('public'))
 //set view engine to ejs
 app.set('view engine', 'ejs');
 
+//chatCat points to the app/index which is exporting everything
+//session app.use has to be before router
+app.use(chatCat.session)
+
 app.use('/', chatCat.router);
 
 
