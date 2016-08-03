@@ -3,6 +3,7 @@
 const passport = require('passport');
 const config = require('../config');
 const FacebookStrategy = require('passport-facebook').Strategy;
+const TwitterStrategy = require('passport-twitter').Strategy;
 const h = require('../helpers');
 
 module.exports = () => {
@@ -14,7 +15,7 @@ module.exports = () => {
     done(null,user.id);
   })
 
-  //this comes back as req.user 
+  //this comes back as req.user
   passport.deserializeUser((id, done) => {
     h.findById(id)
       .then(user => done(null, user))
@@ -37,5 +38,6 @@ module.exports = () => {
     // if user is found, return user data using done()
     // if user is not found, create one in local db and return
   }
-  passport.use(new FacebookStrategy(config.fb, authProcessor))
+  passport.use(new FacebookStrategy(config.fb, authProcessor));
+  passport.use(new TwitterStrategy(config.twitter, authProcessor));
 }

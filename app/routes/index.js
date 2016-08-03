@@ -23,7 +23,18 @@ module.exports = () => {
       '/auth/facebook/callback': passport.authenticate('facebook', {
         successRedirect: '/rooms',
         failureRedirect: '/'
-      })
+      }),
+      '/auth/twitter': passport.authenticate('twitter'),
+      '/auth/twitter/callback': passport.authenticate('facebook', {
+        successRedirect: '/rooms',
+        failureRedirect: '/'
+      }),
+      '/logout': (req,res,next) => {
+        // req.logout clears out session and clears req.user
+        // req.logout is provided by passport 
+        req.logout()
+        res.redirect('/')
+      }
     },
     'post': {
 
