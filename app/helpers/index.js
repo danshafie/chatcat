@@ -72,6 +72,8 @@ let findById = id => {
 let isAuthenticated = (req,res,next) => {
   //isAuthenticated is provided by passport
   if(req.isAuthenticated()) {
+    //next is used in routes - isAuthenticated gets called first and if
+    //this check gets passed then it gets thrown into the route handler
     next();
   } else {
     res.redirect('/')

@@ -28,7 +28,7 @@ app.use('/', chatCat.router);
 
 
 //middleware is used in all routes unless specified
-
-app.listen(app.get('port'), () => {
+//plug in socketio into application 
+chatCat.ioServer(app).listen(app.get('port'), () => {
   console.log('listening on ', app.get('port'));
 })

@@ -11,14 +11,18 @@ module.exports = () => {
       '/': (req,res,next) => {
         res.render('login');
       },
-      '/rooms': (req,res,next) => {
+      //if put in array express allows you to put multiple route handler functions
+      //for a given route
+      '/rooms': [h.isAuthenticated, (req,res,next) => {
         res.render('rooms', {
           user: req.user
         });
-      },
-      '/chat': (req,res,next) => {
-        res.render('chatroom');
-      },
+      }],
+      '/chat': [h.isAuthenticated, (req,res,next) => {
+        res.render('chatroom', {
+          user: req.user
+        });
+      }],
       '/auth/facebook': passport.authenticate('facebook'),
       '/auth/facebook/callback': passport.authenticate('facebook', {
         successRedirect: '/rooms',
@@ -31,7 +35,7 @@ module.exports = () => {
       }),
       '/logout': (req,res,next) => {
         // req.logout clears out session and clears req.user
-        // req.logout is provided by passport 
+        // req.logout is provided by passport
         req.logout()
         res.redirect('/')
       }
