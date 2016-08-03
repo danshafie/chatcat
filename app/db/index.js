@@ -11,6 +11,18 @@ Mongoose.connection.on('error', error => {
   console.log('MongoDB error: ', error);
 })
 
+
+//create schema that defines the structure for storing user data
+const chatUser = new Mongoose.Schema({
+  profileId: String,
+  fullName: String,
+  profilePic: String
+})
+
+// turn schema into a usable model
+let userModel = Mongoose.model('chat', chatUser);
+
 module.exports = {
-  Mongoose
+  Mongoose,
+  userModel
 }
