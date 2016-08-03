@@ -2,6 +2,8 @@
 
 // const router = require('express').Router();
 
+require('./auth')();
+
 
 //res.render looks into a folder called views so you dont need to explicity say so
 

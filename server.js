@@ -4,6 +4,7 @@ const express = require('express');
 
 const app = express();
 const chatCat = require('./app');
+const passport = require('passport');
 
 //set port to environment port or 3000
 app.set('port', process.env.PORT || 3000)
@@ -18,7 +19,10 @@ app.set('view engine', 'ejs');
 //chatCat points to the app/index which is exporting everything
 //session app.use has to be before router
 app.use(chatCat.session)
-
+//initializes with express
+app.use(passport.initialize());
+// starts session with express
+app.use(passport.session());
 app.use('/', chatCat.router);
 
 

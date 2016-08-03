@@ -6,6 +6,21 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const h = require('../helpers');
 
 module.exports = () => {
+
+  //serializeUser is invoked when authorize aka authProcessor ends
+  //invoking done and passing user.id makes session and stores user.id in session
+  //user.id is from the db not the facebook id
+  passport.serializeUser((user, done) => {
+    done(null,user.id);
+  })
+
+  //this comes back as req.user 
+  passport.deserializeUser((id, done) => {
+    h.findById(id)
+      .then(user => done(null, user))
+      .catch(error => console.log('Error when deserializing user ', error))
+  })
+
   let authProcessor = (accessToken, refreshToken, profile, done) => {
     // find user in local db in profile.id
     h.findOne(profile.id)
