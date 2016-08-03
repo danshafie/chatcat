@@ -68,9 +68,21 @@ let findById = id => {
   })
 }
 
+//middleware that checks to see if user is authenticated and logged in
+let isAuthenticated = (req,res,next) => {
+  //isAuthenticated is provided by passport
+  if(req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect('/')
+  }
+}
+
+
 module.exports = {
   route,
   findOne,
   createChatUser,
-  findById
+  findById,
+  isAuthenticated
 }
