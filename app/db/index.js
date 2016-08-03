@@ -6,6 +6,7 @@ const config = require('../config');
 const Mongoose = require('mongoose').connect(config.dbURI);
 
 
+
 //if there is an error on connection - log it out
 Mongoose.connection.on('error', error => {
   console.log('MongoDB error: ', error);

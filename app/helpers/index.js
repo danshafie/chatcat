@@ -1,6 +1,7 @@
 'use strict';
 
 const router = require('express').Router();
+const db = require('../db');
 
 
 //recursive function to iterate through the routes object and mount the routes
@@ -28,7 +29,48 @@ let route = routes => {
   return router;
 }
 
+//find a single user based on a key
+let findOne = profileId => {
+  return db.userModel.findOne({
+    'profileId': profileId
+  })
+}
+
+let createChatUser = profile => {
+  return new Promise((resolve, reject) => {
+    let newChatUser = db.userModel({
+      profileId: profile.id,
+      fullName: profile.displayName,
+      profilePic: profile.photos[0].value || ''
+    })
+
+    newChatUser.save(error => {
+      if(error) {
+        console.log('error saving user in db ', error);
+        reject(error);
+      } else {
+        resolve(newChatUser)
+      }
+    })
+  })
+}
+
+//es6 promise version of findById
+let findById = id => {
+  return new Promise((resolve,reject) => {
+    db.userModel.findById(id, (error, user) => {
+      if(error) {
+        reject(error);
+      } else {
+        resolve(user);
+      }
+    })
+  })
+}
 
 module.exports = {
-  route
+  route,
+  findOne,
+  createChatUser,
+  findById
 }
